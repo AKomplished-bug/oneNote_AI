@@ -1,12 +1,12 @@
 from langchain.tools import tool
-from fpdf2 import fpdf
+from fpdf import FPDF
 
 class PDFCreationTool:
     @tool("Create PDF from Text and Images")
     def create_pdf(self, text, images):
         """Create a PDF document from given text and images"""
         try:
-            pdf = fpdf.FPDF()
+            pdf = FPDF()
             for line in text.split("\n"):
                 pdf.add_page()
                 pdf.set_font("Arial", size=12)

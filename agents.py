@@ -1,7 +1,6 @@
 from crewai import Agent
 from textwrap import dedent
-from langchain.llms import OpenAI, Ollama
-from langchain_openai import ChatOpenAI
+import google.generativeai as genai
 
 # Import required tools
 from Tools.markdown_tool import MarkdownTool
@@ -18,10 +17,9 @@ from Tools.text_splitter_tool import TextSplitterTool
 # You can also define custom tasks in tasks.py
 class CustomAgents:
     def __init__(self):
-        self.OpenAIGPT35 = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
-        self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
-        self.Ollama = Ollama(model="openhermes")
-
+        self.GeminiPro = genai.GenerativeModel('gemini-pro')
+        self.GeminiProVision = genai.GenerativeModel('gemini-pro-vision')
+      
     def note_generation_agent(self):
         tools = [
             MarkdownTool(),
@@ -39,7 +37,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.GeminiProVision,
         )
 
     def data_agent(self):
@@ -55,7 +53,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm= self.GeminiPro,
         )
 
     def image_agent(self):
@@ -70,7 +68,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.GeminiProVision,
         )
 
     def Structure_agent(self):
@@ -86,7 +84,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.GeminiPro,
         )
 
     def pdf_agent(self):
@@ -102,5 +100,5 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.GeminiPro,
         )

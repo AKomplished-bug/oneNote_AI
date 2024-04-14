@@ -11,8 +11,10 @@ load_dotenv()
 # This is the main class that you will use to define your custom crew.
 # You can define as many agents and tasks as you want in agents.py and tasks.py
 class CustomCrew:
-    def __init__(self, topic):
+    def __init__(self, topic,preference):
         self.topic = topic
+        self.preference=preference
+      
 
     def run(self):
         # Define your custom agents and tasks in agents.py and tasks.py
@@ -27,10 +29,10 @@ class CustomCrew:
         pdf_agent = agents.pdf_agent()
 
         # Define your custom tasks
-        data_task = tasks.data_gathering_task(data_agent, self.topic)
-        image_task = tasks.image_gathering_task(image_agent, self.topic)
-        structuring_task = tasks.structuring_task(structure_agent, data_task, image_task)
-        pdf_task = tasks.pdf_generation_task(pdf_agent, structuring_task)
+        data_task = tasks.generate_notes_task(data_agent, self.topic,self.preference)
+        image_task = tasks.search_images_task(image_agent, self.topic,data_task)
+        structuring_task = tasks.structure_content_task(structure_agent, data_task, image_task)
+        pdf_task = tasks.generate_pdf_task(pdf_agent, structuring_task)
 
         # Define your custom crew
         crew = Crew(
@@ -46,7 +48,8 @@ if __name__ == "__main__":
     print("## Welcome to Crew AI Template")
     print("-------------------------------")
     topic = input(dedent("""Enter the topic for which you want to generate notes: """))
-    custom_crew = CustomCrew(topic)
+    preference = input(dedent("""Enter the prefered length of notes(short or long): """))
+    custom_crew = CustomCrew(topic,preference)
     result = custom_crew.run()
     print("\n\n########################")
     print("## Here is your custom crew run result:")

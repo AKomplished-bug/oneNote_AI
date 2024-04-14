@@ -1,7 +1,7 @@
 from crewai import Agent
 from textwrap import dedent
-import google.generativeai as genai
-
+from langchain_google_genai import ChatGoogleGenerativeAI
+import os
 # Import required tools
 from Tools.markdown_tool import MarkdownTool
 from Tools.math_tool import MathEnvironmentTool
@@ -17,15 +17,16 @@ from Tools.text_splitter_tool import TextSplitterTool
 # You can also define custom tasks in tasks.py
 class CustomAgents:
     def __init__(self):
-        self.GeminiPro = genai.GenerativeModel('gemini-pro')
-        self.GeminiProVision = genai.GenerativeModel('gemini-pro-vision')
+        google_api_key = os.getenv("GOOGLE_API_KEY")
+        self.llm = ChatGoogleGenerativeAI(
+        model="gemini-pro", verbose=True, temperature=0.9, google_api_key=google_api_key
+    )
       
     def note_generation_agent(self):
         tools = [
             MarkdownTool(),
             MathEnvironmentTool(),
             PDFCreationTool(),
-            UnsplashAPITool(),
             WikipediaSearchTool(),
             SearchTools(),
             TextSplitterTool(),
@@ -37,7 +38,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.GeminiProVision,
+             llm=self.llm,
         )
 
     def data_agent(self):
@@ -53,12 +54,12 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm= self.GeminiPro,
+            llm=self.llm,
         )
 
     def image_agent(self):
         tools = [
-            UnsplashAPITool(),
+            
             SearchTools(),
         ]
         return Agent(
@@ -68,7 +69,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.GeminiProVision,
+            llm=self.llm,
         )
 
     def Structure_agent(self):
@@ -84,7 +85,7 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.GeminiPro,
+            llm=self.llm,
         )
 
     def pdf_agent(self):
@@ -100,5 +101,5 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-            llm=self.GeminiPro,
+            llm=self.llm,
         )

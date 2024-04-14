@@ -3,12 +3,18 @@ from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.tools import WikipediaQueryRun
 
 class WikipediaSearchTool:
-    def __init__(self):
-        self.wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-
     @tool("Search Wikipedia")
     def search_wikipedia(self, query):
-        """Useful to search Wikipedia for information about a given topic."""
+        """
+        Search Wikipedia for information about a given topic.
+
+        Args:
+            query (str): The query to search for on Wikipedia.
+
+        Returns:
+            str: The search result from Wikipedia, or an error message if no results were found.
+        """
+        self.wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
         try:
             result = self.wikipedia.run(query)
             return result

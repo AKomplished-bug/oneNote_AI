@@ -24,12 +24,12 @@ class CustomAgents:
       
     def note_generation_agent(self):
         tools = [
-            MarkdownTool(),
-            MathEnvironmentTool(),
-            PDFCreationTool(),
-            WikipediaSearchTool(),
-            SearchTools(),
-            TextSplitterTool(),
+           
+            MathEnvironmentTool.render_math,
+            PDFCreationTool.create_pdf,
+            WikipediaSearchTool.search_wikipedia,
+            SearchTools.search_internet,
+            TextSplitterTool.split_text,
         ]
         return Agent(
             role="Note generation agent",
@@ -38,14 +38,14 @@ class CustomAgents:
             tools=tools,
             allow_delegation=False,
             verbose=True,
-             llm=self.llm,
+            llm=self.llm,
         )
 
     def data_agent(self):
         tools = [
-            WikipediaSearchTool(),
-            SearchTools(),
-            TextSplitterTool(),
+             WikipediaSearchTool.search_wikipedia,
+             SearchTools.search_internet,
+             TextSplitterTool.split_text,
         ]
         return Agent(
             role="Data Engineer",
@@ -60,7 +60,7 @@ class CustomAgents:
     def image_agent(self):
         tools = [
             
-            SearchTools(),
+            SearchTools.search_internet,
         ]
         return Agent(
             role="Image Acquisition Agent",
@@ -74,8 +74,8 @@ class CustomAgents:
 
     def Structure_agent(self):
         tools = [
-            MarkdownTool(),
-            TextSplitterTool()
+            
+            TextSplitterTool.split_text,
             
         ]
         return Agent(
@@ -90,8 +90,8 @@ class CustomAgents:
 
     def pdf_agent(self):
         tools = [
-            PDFCreationTool(),
-            MarkdownTool()
+            PDFCreationTool.create_pdf,
+            
            
         ]
         return Agent(

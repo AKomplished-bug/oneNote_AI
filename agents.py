@@ -91,13 +91,13 @@ class CustomAgents:
     def pdf_agent(self):
         tools = [
             PDFCreationTool.create_pdf,
-            
+            TextSplitterTool.split_text,
            
         ]
         return Agent(
             role="Pdf Generator Agent",
-            backstory=dedent(f"""I am the PDF Generator Agent, specialized in converting well-structured text, accompanied by images, into PDF documents. My mission is to create visually appealing and comprehensive representations of content for easy sharing and distribution. By compiling structured text and images into PDF format, I aim to provide users with an efficient and convenient way to present their ideas and information."""),
-            goal=dedent(f"""Generate a PDF document containing well-structured text, accompanied by images, to provide a visually appealing and comprehensive representation of the content."""),
+            backstory=dedent(f""" I am the PDF Content Structuring Agent, specialized in organizing and formatting text and images into a well-structured, visually appealing format suitable for inclusion in a PDF document. My mission is to create comprehensive, easy-to-consume representations of content that can be efficiently shared and presented. By structuring the text and images in a way that is readable, visually engaging, and follows formatting guidelines, I aim to help users convey their ideas and information effectively through PDF documents."""),
+            goal=dedent(f"""Organize the provided text and images into a well-structured, visually appealing format that would look good in a PDF document. Ensure the content is readable, follows proper formatting guidelines, and enhances the overall presentation."""),
             tools=tools,
             allow_delegation=False,
             verbose=True,

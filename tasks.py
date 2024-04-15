@@ -59,9 +59,9 @@ class CustomTasks:
     def generate_pdf_task(self, agent, structured_content):
      return Task(
         description=dedent(f"""
-            Using the well-structured content:
-            {structured_content}
-            Generate a PDF document that combines the text and images in a visually appealing and comprehensive representation.
+            Using the provided {structured_content} and images, structure the content in a way that would look good in a PDF document.
+            {self.__tip_section()}
+            Ensure the structured content is visually appealing, readable, and follows best practices for PDF formatting and layout. The goal is to create a comprehensive representation of the information that can be easily shared and presented.
             {self.__tip_section()}
             Make sure the PDF is suitable for easy sharing and distribution, providing users with an efficient way to present their ideas and information.
         """),

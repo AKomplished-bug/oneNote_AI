@@ -2,6 +2,8 @@ from crewai import Crew
 from textwrap import dedent
 from agents import CustomAgents
 from tasks import CustomTasks
+from fpdf import FPDF
+import os
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -45,8 +47,11 @@ class CustomCrew:
 
 # This is the main function that you will use to run your custom crew.
 if __name__ == "__main__":
-    print("## Welcome to Crew AI Template")
-    print("-------------------------------")
+    print(f"\n{'#' * 50}")
+    print(f"\033[1;34m{'## Welcome to OneNote AI':^50}\033[0m")
+    print(f"{'#' * 50}\n")
+    print("\033[1;33m-------------------------------\033[0m")
+
     topic = input(dedent("""Enter the topic for which you want to generate notes: """))
     preference = input(dedent("""Enter the prefered length of notes(short or long): """))
     custom_crew = CustomCrew(topic,preference)
@@ -55,3 +60,21 @@ if __name__ == "__main__":
     print("## Here is your custom crew run result:")
     print("########################\n")
     print(result)
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    # Add the result to the PDF
+    for line in result.split("\n"):
+        pdf.multi_cell(0, 10, txt=line)
+
+    # Create the 'pdf' directory if it doesn't exist
+    pdf_dir = "pdf"
+    if not os.path.exists(pdf_dir):
+        os.makedirs(pdf_dir)
+
+    # Save the PDF file
+    pdf_file_path = os.path.join(pdf_dir, f"notes_{topic.replace(' ', '_')}.pdf")
+    pdf.output(pdf_file_path, 'F')
+    print(f"\n\033[1;34mPDF file created: {pdf_file_path}\033[0m")

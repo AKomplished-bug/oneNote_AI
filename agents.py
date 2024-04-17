@@ -28,13 +28,14 @@ class CustomAgents:
             MathEnvironmentTool.render_math,
             PDFCreationTool.create_pdf,
             WikipediaSearchTool.search_wikipedia,
-            SearchTools.search_internet,
             TextSplitterTool.split_text,
+            SearchTools.search_internet,
+            SearchTools.search_browser
         ]
         return Agent(
             role="Note generation agent",
             backstory=dedent(f"""Expert at developing well tailored notes by extracting relevant information from the internet based on user query, designed with the purpose of assisting users in creating comprehensive PDF notes tailored to their preferences."""),
-            goal=dedent(f"""Create a pdf of notes with texts, formulas and pictures as per the preference of the user"""),
+            goal=dedent(f"""Create a long or short pdf of notes with texts, formulas, code, etc as per the preference of the user"""),
             tools=tools,
             allow_delegation=False,
             verbose=True,
@@ -46,6 +47,7 @@ class CustomAgents:
              WikipediaSearchTool.search_wikipedia,
              SearchTools.search_internet,
              TextSplitterTool.split_text,
+             SearchTools.search_browser
         ]
         return Agent(
             role="Data Engineer",
@@ -57,20 +59,20 @@ class CustomAgents:
             llm=self.llm,
         )
 
-    def image_agent(self):
-        tools = [
+    # def image_agent(self):
+    #     tools = [
             
-            SearchTools.search_internet,
-        ]
-        return Agent(
-            role="Image Acquisition Agent",
-            backstory=dedent(f"""Expert at browsing the internet and extracting images from it, dedicated to enriching textual content with visually engaging images sourced from the web. My mission is to enhance comprehension and visual appeal by seamlessly integrating relevant images with text. Drawing upon advanced search algorithms, I scour the web for images that complement the generated text, ensuring a cohesive and impactful presentation. Committed to enhancing the user experience, I facilitate the fusion of textual and visual elements, empowering users to convey information effectively and compellingly."""),
-            goal=dedent(f"""Search the web for images relevant to the generated text and integrate them seamlessly with the text to enhance comprehension and visual appeal."""),
-            tools=tools,
-            allow_delegation=False,
-            verbose=True,
-            llm=self.llm,
-        )
+    #         SearchTools.search_internet,
+    #     ]
+    #     return Agent(
+    #         role="Image Acquisition Agent",
+    #         backstory=dedent(f"""Expert at browsing the internet and extracting images from it, dedicated to enriching textual content with visually engaging images sourced from the web. My mission is to enhance comprehension and visual appeal by seamlessly integrating relevant images with text. Drawing upon advanced search algorithms, I scour the web for images that complement the generated text, ensuring a cohesive and impactful presentation. Committed to enhancing the user experience, I facilitate the fusion of textual and visual elements, empowering users to convey information effectively and compellingly."""),
+    #         goal=dedent(f"""Search the web for images relevant to the generated text and integrate them seamlessly with the text to enhance comprehension and visual appeal."""),
+    #         tools=tools,
+    #         allow_delegation=False,
+    #         verbose=True,
+    #         llm=self.llm,
+    #     )
 
     def Structure_agent(self):
         tools = [
@@ -80,8 +82,8 @@ class CustomAgents:
         ]
         return Agent(
             role="Data Structuring Agent",
-            backstory=dedent(f"""Expert at Structuring data, designed to organize generated text and associated images extracted from the browser according to user preferences. My mission is to facilitate the creation of structured PDF documents by accommodating the user's formatting preferences. Through careful organization and structuring, I aim to enhance the readability and usability of the generated content, empowering users to efficiently communicate their ideas and information."""),
-            goal=dedent(f"""Structure the generated text, including images extracted from the browser, according to the user's preferred format, enabling the generation of a PDF document."""),
+            backstory=dedent(f"""Expert at Structuring data, designed to organize generated text  from the browser according to user preferences. My mission is to facilitate the creation of structured PDF documents by accommodating the user's formatting preferences. Through careful organization and structuring, I aim to enhance the readability and usability of the generated content, empowering users to efficiently communicate their ideas and information."""),
+            goal=dedent(f"""Structure the generated text, according to the user's preferred format, enabling the generation of a PDF document."""),
             tools=tools,
             allow_delegation=False,
             verbose=True,
@@ -96,8 +98,8 @@ class CustomAgents:
         ]
         return Agent(
             role="Pdf Generator Agent",
-            backstory=dedent(f""" I am the PDF Content Structuring Agent, specialized in organizing and formatting text and images into a well-structured, visually appealing format suitable for inclusion in a PDF document. My mission is to create comprehensive, easy-to-consume representations of content that can be efficiently shared and presented. By structuring the text and images in a way that is readable, visually engaging, and follows formatting guidelines, I aim to help users convey their ideas and information effectively through PDF documents."""),
-            goal=dedent(f"""Organize the provided text and images into a well-structured, visually appealing format that would look good in a PDF document. Ensure the content is readable, follows proper formatting guidelines, and enhances the overall presentation."""),
+            backstory=dedent(f""" I am the PDF Content Structuring Agent, specialized in organizing and formatting text into a well-structured, visually appealing format suitable for inclusion in a PDF document. My mission is to create comprehensive, easy-to-consume representations of content that can be efficiently shared and presented. By structuring the text in a way that is readable, visually engaging, and follows formatting guidelines, I aim to help users convey their ideas and information effectively through PDF documents."""),
+            goal=dedent(f"""Organize the provided text into a well-structured, visually appealing format that would look good in a PDF document. Ensure the content is readable, follows proper formatting guidelines, and enhances the overall presentation."""),
             tools=tools,
             allow_delegation=False,
             verbose=True,

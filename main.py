@@ -26,20 +26,20 @@ class CustomCrew:
         # Define your custom agents
         note_generation_agent = agents.note_generation_agent()
         data_agent = agents.data_agent()
-        image_agent = agents.image_agent()
+        # image_agent = agents.image_agent()
         structure_agent = agents.Structure_agent()
         pdf_agent = agents.pdf_agent()
 
         # Define your custom tasks
         data_task = tasks.generate_notes_task(data_agent, self.topic,self.preference)
-        image_task = tasks.search_images_task(image_agent, self.topic,data_task)
-        structuring_task = tasks.structure_content_task(structure_agent, data_task, image_task)
+        # image_task = tasks.search_images_task(image_agent, self.topic,data_task)
+        structuring_task = tasks.structure_content_task(structure_agent, data_task)
         pdf_task = tasks.generate_pdf_task(pdf_agent, structuring_task)
 
         # Define your custom crew
         crew = Crew(
-            agents=[note_generation_agent, data_agent, image_agent, structure_agent, pdf_agent],
-            tasks=[data_task, image_task, structuring_task, pdf_task],
+            agents=[note_generation_agent, data_agent, structure_agent, pdf_agent],
+            tasks=[data_task, structuring_task, pdf_task],
             verbose=True,
         )
         result = crew.kickoff()

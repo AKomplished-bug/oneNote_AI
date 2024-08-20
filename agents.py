@@ -2,16 +2,12 @@ from crewai import Agent
 from textwrap import dedent
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
-# Import required tools
-from Tools.markdown_tool import MarkdownTool
-from Tools.math_tool import MathEnvironmentTool
 from Tools.pdf_gen_tool import PDFCreationTool
-from Tools.unsplashapitool import UnsplashAPITool
-from Tools.wiki_search_tool import WikipediaSearchTool
 from Tools.search_tool import SearchTools
 from Tools.text_splitter_tool import TextSplitterTool
-
-
+from Tools.image_URL_extractor_tool import UnsplashAPITool
+ 
+ 
 # This is an example of how to define custom agents.
 # You can define as many agents as you want.
 # You can also define custom tasks in tasks.py
@@ -21,14 +17,14 @@ class CustomAgents:
         self.llm = ChatGoogleGenerativeAI(
         model="gemini-pro", verbose=True, temperature=0.9, google_api_key=google_api_key
     )
-      
+ 
     def note_generation_agent(self):
         tools = [
-           
-            MathEnvironmentTool.render_math,
-            PDFCreationTool.create_pdf,
-            WikipediaSearchTool.search_wikipedia,
-            TextSplitterTool.split_text,
+ 
+            #MathEnvironmentTool.render_math,
+            #PDFCreationTool.create_pdf,
+            #WikipediaSearchTool.search_wikipedia,
+            #TextSplitterTool.split_text,
             SearchTools.search_internet,
             SearchTools.search_browser
         ]
@@ -41,12 +37,12 @@ class CustomAgents:
             verbose=True,
             llm=self.llm,
         )
-
+ 
     def data_agent(self):
         tools = [
-             WikipediaSearchTool.search_wikipedia,
+             #WikipediaSearchTool.search_wikipedia,
              SearchTools.search_internet,
-             TextSplitterTool.split_text,
+             #TextSplitterTool.split_text,
              SearchTools.search_browser
         ]
         return Agent(
@@ -58,27 +54,27 @@ class CustomAgents:
             verbose=True,
             llm=self.llm,
         )
-
-    # def image_agent(self):
-    #     tools = [
-            
-    #         SearchTools.search_internet,
-    #     ]
-    #     return Agent(
-    #         role="Image Acquisition Agent",
-    #         backstory=dedent(f"""Expert at browsing the internet and extracting images from it, dedicated to enriching textual content with visually engaging images sourced from the web. My mission is to enhance comprehension and visual appeal by seamlessly integrating relevant images with text. Drawing upon advanced search algorithms, I scour the web for images that complement the generated text, ensuring a cohesive and impactful presentation. Committed to enhancing the user experience, I facilitate the fusion of textual and visual elements, empowering users to convey information effectively and compellingly."""),
-    #         goal=dedent(f"""Search the web for images relevant to the generated text and integrate them seamlessly with the text to enhance comprehension and visual appeal."""),
-    #         tools=tools,
-    #         allow_delegation=False,
-    #         verbose=True,
-    #         llm=self.llm,
-    #     )
-
+ 
+    def image_agent(self):
+        tools = [
+ 
+            UnsplashAPITool.search_unsplash,
+        ]
+        return Agent(
+            role="Image Acquisition Agent",
+            backstory=dedent(f"""Expert at browsing the internet and extracting images from it, dedicated to enriching textual content with visually engaging images sourced from the web. My mission is to enhance comprehension and visual appeal by seamlessly integrating relevant images with text. Drawing upon advanced search algorithms, I scour the web for images that complement the generated text, ensuring a cohesive and impactful presentation. Committed to enhancing the user experience, I facilitate the fusion of textual and visual elements, empowering users to convey information effectively and compellingly."""),
+            goal=dedent(f"""Search the web for images relevant to the generated text and integrate them seamlessly with the text to enhance comprehension and visual appeal."""),
+            tools=tools,
+            allow_delegation=False,
+            verbose=True,
+            llm=self.llm,
+        )
+ 
     def Structure_agent(self):
         tools = [
-            
+ 
             TextSplitterTool.split_text,
-            
+ 
         ]
         return Agent(
             role="Data Structuring Agent",
@@ -89,12 +85,12 @@ class CustomAgents:
             verbose=True,
             llm=self.llm,
         )
-
+ 
     def pdf_agent(self):
         tools = [
             PDFCreationTool.create_pdf,
             TextSplitterTool.split_text,
-           
+ 
         ]
         return Agent(
             role="Pdf Generator Agent",

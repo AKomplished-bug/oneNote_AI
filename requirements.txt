@@ -1,7 +1,6 @@
 crewai==0.11.0
-langgraph==0.0.15
 langchain-community==0.0.14
-python-dotenv==1.0.0
+python-dotenv
 google-search-results==2.1.0
 google-api-python-client==2.114.0
 google-auth-oauthlib==1.2.0
@@ -10,5 +9,6 @@ beautifulsoup4==4.12.3
 tavily-python==0.3.1
 langchain_google_genai
 sympy
-fpdf
+fpdf==1.7.2 
 colorama
+Markdown

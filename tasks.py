@@ -2,9 +2,7 @@ from crewai import Task
 from textwrap import dedent
 
 
-# This is an example of how to define custom tasks.
-# You can define as many tasks as you want.
-# You can also define custom agents in agents.py
+
 class CustomTasks:
     def __tip_section(self):
         return "If you do your BEST WORK, I'll give you a $10,000 commission!"
@@ -34,17 +32,17 @@ class CustomTasks:
         agent=agent,
     )
 
-    # def search_images_task(self, agent, topic, text):
-    #  return Task(
-    #     description=dedent(f"""
-    #         Based on the topic '{topic}' and the generated text:
-    #         {text}
-    #         Search the web for relevant images that complement and enhance the textual content.
-    #         {self.__tip_section()}
-    #         Make sure the images are visually engaging and help convey the information more effectively.
-    #     """),
-    #     agent=agent,
-    # )
+    def search_images_task(self, agent, topic, text):
+     return Task(
+        description=dedent(f"""
+            Based on the topic '{topic}' and the generated text:
+            {text}
+            Search the web for relevant images that complement and enhance the textual content.
+            {self.__tip_section()}
+            Make sure the images are visually engaging and help convey the information more effectively.
+        """),
+        agent=agent,
+    )
 
     def structure_content_task(self, agent, text):
      return Task(

@@ -8,3 +8,7 @@ google-auth-oauthlib==1.2.0
 google-auth-httplib2==0.2.0
 beautifulsoup4==4.12.3
 tavily-python==0.3.1
+langchain_google_genai
+sympy
+fpdf
+colorama
